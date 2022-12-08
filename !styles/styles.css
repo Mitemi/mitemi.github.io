@@ -1,0 +1,48 @@
+
+body{
+    font-family: Verdana, Geneva, sans-serif;
+    font-size: 17px;
+    letter-spacing: -0.2px;
+    word-spacing: -0.8px;
+    color: #00FF0D;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    background-color: #000000;
+    
+}
+
+button {
+    background-color: #61096d;
+    border: none;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+#bottom {
+    position: fixed;
+    bottom: 5;
+    left: 10;
+  }
+
+#bottomright {
+    position: fixed;
+    bottom: 5;
+    left: 1210;
+    font-size: 13px
+}
+
+a:link {
+    color: rgb(255, 255, 0);
+}
+a:visited {
+    color: rgb(255, 255, 0);
+}
+a:active {
+    color: rgb(88, 0, 114);
+}

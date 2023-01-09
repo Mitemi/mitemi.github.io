@@ -21,7 +21,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: small;
   }
 
 #bottom {
@@ -34,7 +34,7 @@ button {
     position: fixed;
     bottom: 5;
     left: 1210;
-    font-size: 13px
+    font-size: small
 }
 
 a:link {
@@ -45,4 +45,13 @@ a:visited {
 }
 a:active {
     color: rgb(88, 0, 114);
+}
+
+#select > a {
+    background-color: #61096d;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 5
 }

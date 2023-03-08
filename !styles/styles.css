@@ -55,3 +55,12 @@ a:active {
     display: inline-block;
     margin: 5px 5
 }
+
+#selectsmall > a {
+    background-color: #61096d;
+    padding: 5px 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px 5
+}

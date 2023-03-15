@@ -64,3 +64,29 @@ a:active {
     display: inline-block;
     margin: 5px 5
 }
+
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 1px;
+  }
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+.imagebay {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-flow: row wrap;
+    gap: 10px 10px;
+}
+
+.flex {
+    display: flex
+}

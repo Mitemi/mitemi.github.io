@@ -1,0 +1,73 @@
+/*====================*/
+/*                    */
+/*     GSPN MAIN      */
+/*                    */
+/*====================*/
+
+
+@import url(./layouts.css);
+
+/*font*/
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+/*everything else*/
+body {
+  background-color: #171717;
+  font-family: 'Share Tech Mono';
+  color: white;
+  padding-left: 10px;
+}
+
+a {
+  font-family: 'Share Tech Mono';
+  color: #ccc;
+
+}
+
+a:hover {
+  background-color: #383838;
+}
+
+input,
+select {
+  font-family: 'Share Tech Mono';
+  color: #b6b7b7;
+  background-color: #292929;
+  transition: 300ms;
+}
+
+button {
+  font-family: 'Share Tech Mono';
+  background-color: #292929;
+  color: #ccc;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  transition: 300ms;
+  text-shadow: #fff 0 0 0.5rem, rgba(255, 255, 255, 0.2) 0 0 5rem;
+}
+
+button:hover {
+  text-shadow: #fff 0 0 0.5rem, rgba(255, 255, 255, 0.7) 0 0 5rem, slategray 0 0 6rem;
+  background-color: #383838;
+}
+
+code {
+  background-color: ivory;
+}
+
+input:focus,
+button:focus {
+  outline: white;
+  box-shadow: #fff 0 0 0.5rem, rgba(255, 255, 255, 0.2) 0 0 5rem;
+}
+
+*:focus {
+  outline: none;
+}

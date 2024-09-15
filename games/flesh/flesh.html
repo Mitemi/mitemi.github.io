@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flesh Game</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="header">
+        <h1>Flesh Game</h1>
+    </div>
+
+    <div class="main-container">
+        <div class="left-section">
+            <div class="metrics-container">
+                <div class="metric-box"><img width="16px" src="./img/flesh.webp" style="vertical-align: middle"> Flesh: <span id="fleshCount">0</span>
+                </div>
+                <div class="metric-box"><img width="22px" src="./img/tctc.webp" style="vertical-align: middle"> Tokens: <span id="tokenCount">0</span>
+                </div>
+            </div>
+
+            <div class="console">
+                <div id="consoleOutput" class="console-output"></div>
+                <input type="text" id="consoleInput" placeholder="Type 'flesh' to add +1 flesh">
+            </div>
+        </div>
+
+        <div class="right-section">
+            <div class="tabs">
+                <button id="casinoTab" class="tab-button active">Casino</button>
+                <button id="expeditionTab" class="tab-button">Expedition</button>
+            </div>
+
+            <div id="casinoContent" class="content">
+                <h2>Casino Games</h2>
+
+                <!-- Buttons to toggle between games -->
+                <button id="showDice6Game">6-Sided Dice Game</button>
+                <button id="showDice20Game">20-Sided Dice Game</button>
+                <button id="showSlotMachine">Slot Machine</button>
+
+                <!-- 6-Sided Dice Game -->
+                <div id="dice6Game" class="game-section hidden">
+                    <h3>6-Sided Dice Game</h3>
+                    <label for="betAmount6">Bet Amount:</label>
+                    <input type="number" id="betAmount6" min="1" placeholder="Enter bet amount">
+                    <button id="selectNumbers6">Select Numbers</button>
+                    <div id="selectedNumbers6">Selected: None</div>
+                    <button id="rollDice6">Roll Dice</button>
+                    <div id="dice6Result"></div>
+                </div>
+
+                <!-- 20-Sided Dice Game -->
+                <div id="dice20Game" class="game-section hidden">
+                    <h3>20-Sided Dice Game</h3>
+                    <label for="betAmount20">Bet Amount:</label>
+                    <input type="number" id="betAmount20" min="1" placeholder="Enter bet amount">
+                    <button id="selectNumbers20">Select Numbers</button>
+                    <div id="selectedNumbers20">Selected: None</div>
+                    <button id="rollDice20">Roll Dice</button>
+                    <div id="dice20Result"></div>
+                </div>
+
+                <!-- Slot Machine Game -->
+                <div id="slotMachine" class="game-section hidden">
+                    <h3>Slot Machine</h3>
+                    <label for="slotBetAmount">Bet Amount:</label>
+                    <input type="number" id="slotBetAmount" min="1" placeholder="Enter bet amount">
+                    <button id="rollSlot">Roll Slot Machine</button>
+                    <div id="slotResult"></div>
+                </div>
+            </div>
+
+            <!-- Popups for number selection -->
+            <div id="numberPopup6" class="popup hidden">
+                <h3>Select 1 to 5 Numbers (6-Sided Dice)</h3>
+                <div class="checkboxes">
+                    <!-- 6 checkmarks for 6-sided dice -->
+                    <input type="checkbox" id="dice6Num1" value="1"> 1 <br>
+                    <input type="checkbox" id="dice6Num2" value="2"> 2 <br>
+                    <input type="checkbox" id="dice6Num3" value="3"> 3 <br>
+                    <input type="checkbox" id="dice6Num4" value="4"> 4 <br>
+                    <input type="checkbox" id="dice6Num5" value="5"> 5 <br>
+                    <input type="checkbox" id="dice6Num6" value="6"> 6 <br>
+                </div>
+                <button id="confirmSelection6">Confirm</button>
+            </div>
+
+            <div id="numberPopup20" class="popup hidden">
+                <h3>Select 1 to 15 Numbers (20-Sided Dice)</h3>
+                <div class="checkboxes">
+                    <!-- 20 checkmarks for 20-sided dice -->
+                    <input type="checkbox" id="dice20Num1" value="1"> 1 <br>
+                    <!-- Add checkboxes up to 20 -->
+                    <input type="checkbox" id="dice20Num20" value="20"> 20 <br>
+                </div>
+                <button id="confirmSelection20">Confirm</button>
+            </div>
+
+
+            <!-- Expedition Tab Content -->
+            <div id="expeditionContent" class="content hidden">
+                <h2>Colonial Expedition</h2>
+                <p>Invest  <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh for a return. The expedition will take 60 seconds with a chance of failure.</p>
+                <input type="number" id="fleshInvest" min="1" placeholder="Enter flesh amount">
+                <button id="startExpedition">Start Expedition</button>
+                <div id="expeditionResult"></div>
+                <div id="expeditionProgressBar" class="progress-bar hidden"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>

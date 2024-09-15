@@ -1,0 +1,120 @@
+/* General Styling */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+.header {
+    text-align: left;
+    padding: 5px;
+    background-color: #1f1f1f;
+    color: #fff;
+    border-bottom: 1px solid #333;
+}
+
+.main-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.left-section {
+    width: 50%;
+}
+
+.right-section {
+    width: 40%;
+}
+
+.metrics-container {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #333;
+}
+
+.metric-box {
+    background-color: #333;
+    padding: 15px;
+    margin: 10px 0;
+    text-align: center;
+    border-radius: 10px;
+    width: 200px;
+}
+
+.console {
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    margin-top: 20px;
+}
+
+.console-output {
+    height: 200px;
+    overflow-y: auto;
+    background-color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+#consoleInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #333;
+    background-color: #1f1f1f;
+    color: white;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-button {
+    background-color: #333;
+    color: #e0e0e0;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.tab-button.active {
+    background-color: #007bff;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(100, 100, 100);
+    border: 2px solid #000;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.checkboxes {
+    margin: 10px 0;
+}

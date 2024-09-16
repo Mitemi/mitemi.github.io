@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flesh Game</title>
+    <title>   Flesh Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -16,15 +16,17 @@
     <div class="main-container">
         <div class="left-section">
             <div class="metrics-container">
-                <div class="metric-box"><img width="16px" src="./img/flesh.webp" style="vertical-align: middle"> Flesh: <span id="fleshCount">0</span>
+                <div class="metric-box"><img width="16px" src="./img/flesh.webp" style="vertical-align: middle"> Flesh:
+                    <span id="fleshCount">0</span>
                 </div>
-                <div class="metric-box"><img width="22px" src="./img/tctc.webp" style="vertical-align: middle"> Tokens: <span id="tokenCount">0</span>
+                <div class="metric-box"><img width="22px" src="./img/tctc.webp" style="vertical-align: middle"> Tokens:
+                    <span id="tokenCount">0</span>
                 </div>
             </div>
 
             <div class="console">
                 <div id="consoleOutput" class="console-output"></div>
-                <input type="text" id="consoleInput" placeholder="Type 'flesh' to add +1 flesh">
+                <input type="text" id="consoleInput" placeholder="Type 'flesh' to obtain +1 flesh">
             </div>
         </div>
 
@@ -44,7 +46,8 @@
 
                 <!-- 6-Sided Dice Game -->
                 <div id="dice6Game" class="game-section hidden">
-                    <h3>6-Sided Dice Game</h3>
+                    <h3>Dice Game</h3>
+                    <p>A betting game on a six-sided dice. Pick an amount of numbers and if the dice lands on your numbers, you win. Your gains will decrease by 15% for every number picked. Profits begin at 175%.</p>
                     <label for="betAmount6">Bet Amount:</label>
                     <input type="number" id="betAmount6" min="1" placeholder="Enter bet amount">
                     <button id="selectNumbers6">Select Numbers</button>
@@ -56,6 +59,7 @@
                 <!-- 20-Sided Dice Game -->
                 <div id="dice20Game" class="game-section hidden">
                     <h3>20-Sided Dice Game</h3>
+                    <p>A betting game on a twenty-sided dice. Pick an amount of numbers and if the dice lands on your numbers, you win. Your gains will decrease by 15% for every number picked. Profits start at 350%.</p>
                     <label for="betAmount20">Bet Amount:</label>
                     <input type="number" id="betAmount20" min="1" placeholder="Enter bet amount">
                     <button id="selectNumbers20">Select Numbers</button>
@@ -67,6 +71,7 @@
                 <!-- Slot Machine Game -->
                 <div id="slotMachine" class="game-section hidden">
                     <h3>Slot Machine</h3>
+                    <p>Rolls three numbers. If there are matches, you win.</p>
                     <label for="slotBetAmount">Bet Amount:</label>
                     <input type="number" id="slotBetAmount" min="1" placeholder="Enter bet amount">
                     <button id="rollSlot">Roll Slot Machine</button>
@@ -74,11 +79,9 @@
                 </div>
             </div>
 
-            <!-- Popups for number selection -->
             <div id="numberPopup6" class="popup hidden">
                 <h3>Select 1 to 5 Numbers (6-Sided Dice)</h3>
                 <div class="checkboxes">
-                    <!-- 6 checkmarks for 6-sided dice -->
                     <input type="checkbox" id="dice6Num1" value="1"> 1 <br>
                     <input type="checkbox" id="dice6Num2" value="2"> 2 <br>
                     <input type="checkbox" id="dice6Num3" value="3"> 3 <br>
@@ -92,9 +95,7 @@
             <div id="numberPopup20" class="popup hidden">
                 <h3>Select 1 to 15 Numbers (20-Sided Dice)</h3>
                 <div class="checkboxes">
-                    <!-- 20 checkmarks for 20-sided dice -->
                     <input type="checkbox" id="dice20Num1" value="1"> 1 <br>
-                    <!-- Add checkboxes up to 20 -->
                     <input type="checkbox" id="dice20Num20" value="20"> 20 <br>
                 </div>
                 <button id="confirmSelection20">Confirm</button>
@@ -104,11 +105,13 @@
             <!-- Expedition Tab Content -->
             <div id="expeditionContent" class="content hidden">
                 <h2>Colonial Expedition</h2>
-                <p>Invest  <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh for a return. The expedition will take 60 seconds with a chance of failure.</p>
-                <input type="number" id="fleshInvest" min="1" placeholder="Enter flesh amount">
+                <p>Invest <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh in a trade expedition to foreign overseas lands for a chance at great profitable returns.</p>
+                <input type="number" id="fleshInvest" min="1" placeholder="Enter investment">
                 <button id="startExpedition">Start Expedition</button>
-                <div id="expeditionResult"></div>
-                <div id="expeditionProgressBar" class="progress-bar hidden"></div>
+                <div id="expeditionResult"></div><br>
+                <div id="expeditionProgressBar" class="progress-bar hidden">
+                    <div id="expeditionProgressBarInner" class="progress-bar-inner"></div>
+                </div>
             </div>
         </div>
     </div>

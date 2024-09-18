@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>   Flesh Game</title>
+    <title>Flesh Game</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -32,11 +32,12 @@
 
         <div class="right-section">
             <div class="tabs">
-                <button id="casinoTab" class="tab-button active">Casino</button>
+                <button id="casinoTab" class="tab-button">Casino</button>
                 <button id="expeditionTab" class="tab-button">Expedition</button>
+                <button id="shopTab" class="shop-button">General Shop</button>
             </div>
 
-            <div id="casinoContent" class="content">
+            <div id="casinoContent" class="content hidden">
                 <h2>Casino Games</h2>
 
                 <!-- Buttons to toggle between games -->
@@ -101,7 +102,6 @@
                 <button id="confirmSelection20">Confirm</button>
             </div>
 
-
             <!-- Expedition Tab Content -->
             <div id="expeditionContent" class="content hidden">
                 <h2>Colonial Expedition</h2>
@@ -112,6 +112,16 @@
                 <div id="expeditionProgressBar" class="progress-bar hidden">
                     <div id="expeditionProgressBarInner" class="progress-bar-inner"></div>
                 </div>
+            </div>
+
+            <div id="shopContent" class="content hidden">
+                <h2>General Shop</h2>
+                <button id="buyMK1">Buy Flesh Typer MK1 (100 flesh)</button>
+                <button id="buyMK2">Buy Flesh Typer MK2 (1000 flesh)</button>
+                <button id="buyMK3">Buy Flesh Typer MK3 (10000 flesh)</button>
+                <button id="buyPassiveGenerator">Buy Passive Flesh Generator (10000 flesh)</button>
+                <button id="buyInsurance">Buy Insurance Contract (800 flesh)</button>
+                <button id="buyBetterInsurance">Buy Better Insurance (600 flesh)</button>
             </div>
         </div>
     </div>

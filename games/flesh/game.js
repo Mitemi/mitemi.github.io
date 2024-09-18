@@ -17,27 +17,36 @@ const expeditionProgressBar = document.getElementById('expeditionProgressBar');
 const fleshInvest = document.getElementById('fleshInvest');
 const startExpedition = document.getElementById('startExpedition');
 
-// Load saved counters from localStorage
-function loadCounters() {
-    const savedFleshCount = localStorage.getItem('fleshCount');
-    const savedTokenCount = localStorage.getItem('tokenCount');
-    
-    if (savedFleshCount !== null) {
-        fleshCount = parseInt(savedFleshCount, 10);
-    }
-    if (savedTokenCount !== null) {
-        tokenCount = parseInt(savedTokenCount, 10);
-    }
-    
-    // Update the display
-    fleshCounter.textContent = fleshCount;
-    tokenCounter.textContent = tokenCount;
+// Save game state to localStorage
+function saveGame() {
+    localStorage.setItem('fleshCount', JSON.stringify(fleshCount));
+    localStorage.setItem('tokenCount', JSON.stringify(tokenCount));
+    localStorage.setItem('fleshTyperMultiplier', JSON.stringify(fleshTyperMultiplier));
+    localStorage.setItem('passiveFleshGeneratorActive', JSON.stringify(passiveFleshGeneratorActive));
+    localStorage.setItem('insuranceReduction', JSON.stringify(insuranceReduction));
+    localStorage.setItem('currentInsuranceLevel', JSON.stringify(currentInsuranceLevel));
+    localStorage.setItem('betterInsuranceActive', JSON.stringify(betterInsuranceActive));
+    console.log('Game saved!');
 }
 
-// Save counters to localStorage
-function saveCounters() {
-    localStorage.setItem('fleshCount', fleshCount);
-    localStorage.setItem('tokenCount', tokenCount);
+// Load game state from localStorage
+function loadGame() {
+    fleshCount = JSON.parse(localStorage.getItem('fleshCount')) || 0;
+    tokenCount = JSON.parse(localStorage.getItem('tokenCount')) || 0;
+    fleshTyperMultiplier = JSON.parse(localStorage.getItem('fleshTyperMultiplier')) || 1;
+    passiveFleshGeneratorActive = JSON.parse(localStorage.getItem('passiveFleshGeneratorActive')) || false;
+    insuranceReduction = JSON.parse(localStorage.getItem('insuranceReduction')) || 0;
+    currentInsuranceLevel = JSON.parse(localStorage.getItem('currentInsuranceLevel')) || 0;
+    betterInsuranceActive = JSON.parse(localStorage.getItem('betterInsuranceActive')) || false;
+
+    updateFleshCounter();
+    tokenCounter.textContent = tokenCount;
+    console.log('Game loaded!');
+}
+
+window.addEventListener('load', loadGame);
+function updateFleshCounter() {
+    document.getElementById('fleshCount').textContent = fleshCount;
 }
 
 // Update Console
@@ -48,77 +57,164 @@ function updateConsole(message) {
     consoleOutput.scrollTop = consoleOutput.scrollHeight;
 }
 
-// Handle Flesh input
-consoleInput.addEventListener('keypress', function (e) {
+// Function to update the flesh counter display
+function updateFleshCounter() {
+    document.getElementById('fleshCount').textContent = fleshCount;
+}
+
+// Function to update the console display
+function updateConsole(message) {
+    const consoleOutput = document.getElementById('consoleOutput');
+    consoleOutput.innerHTML += `<div>${message}</div>`;
+    consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to the bottom
+}
+
+// Console
+document.getElementById('consoleInput').addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-        const command = consoleInput.value.trim();
+        const command = this.value.trim().toLowerCase();
         const multiplierMatch = command.match(/^flesh\*(\d+)$/);
         
         if (command === 'flesh') {
             fleshCount++;
-            fleshCounter.textContent = fleshCount;
+            updateFleshCounter();
             updateConsole('Received 1 flesh.');
         } else if (command === 'brick') {
-            fleshCount += 1000;
-            fleshCounter.textContent = fleshCount;
-            updateConsole('Received 10 flesh.');
+            fleshCount += 100000;
+            updateFleshCounter();
+            updateConsole('Received 100k flesh.');
         } else if (command === 'token') {
             tokenCount += 0;
-            tokenCounter.textContent = tokenCount;
+            document.getElementById('tokenCounter').textContent = tokenCount;
             updateConsole('Received 0 token.');
+        } else if (command === 'help') {
+            updateConsole('Commands: help, flesh, upgrades, contracts, restart, reset.');
+        } else if (command === 'reset') {
+            // Reset flesh, tokens, and all upgrades
+            fleshCount = 0;
+            tokenCount = 0;
+            fleshTyperMultiplier = 1;
+            passiveFleshGeneratorActive = false;
+            insuranceReduction = 0;
+            currentInsuranceLevel = 0;
+            betterInsuranceActive = false;
+
+            // Update the counters and console
+            updateFleshCounter();
+            document.getElementById('tokenCounter').textContent = tokenCount;
+            updateConsole('All game progress has been reset: Flesh, Tokens, and Upgrades.');
+
         } else if (command === 'judgement') {
             fleshCount -= 10;
-            fleshCounter.textContent = fleshCount;
+            updateFleshCounter();
             updateConsole('Removed 10 flesh.');
         } else if (multiplierMatch) {
             const multiplier = parseInt(multiplierMatch[1], 10);
             if (multiplier >= 1 && multiplier <= 10) {
                 const fleshToAdd = multiplier;
                 fleshCount += fleshToAdd;
-                fleshCounter.textContent = fleshCount;
+                updateFleshCounter();
                 updateConsole(`Received ${fleshToAdd} flesh.`);
                 
                 if (multiplier >= 3) {
                     setTimeout(() => {
                         fleshCount -= fleshToAdd - 1;
-                        fleshCounter.textContent = fleshCount;
-                        //updateConsole(`Removed ${fleshToAdd - 1} flesh after 15 seconds.`);
-                        saveCounters();
+                        updateFleshCounter();
+                        updateConsole(`Removed ${fleshToAdd - 1} flesh after 15 seconds.`);
                     }, 15000);
                 }
             } else {
                 updateConsole(`Invalid multiplier in command: ${command}`);
             }
+        } else if (command === 'restart') {
+            if (passiveGeneratorNeedsRestart) {
+                passiveGeneratorNeedsRestart = false;
+                updateConsole('Passive flesh generator restarted.');
+            } else {
+                updateConsole('The passive generator does not need restarting.');
+            }
+        } else if (command === 'contracts') {
+            let level = currentInsuranceLevel;
+            let reduction = [0.10, 0.15, 0.25, 0.40, 0.50, 0.65][level];
+            updateConsole(`Current Insurance Level: ${level}, Loss Reduction: ${reduction * 100}%.`);
+        } else if (command === 'upgrades') {
+            let upgrades = [];
+            if (fleshTyperMultiplier > 1) upgrades.push(`Flesh Typer Multiplier: ${fleshTyperMultiplier}`);
+            if (passiveFleshGeneratorActive) upgrades.push('Passive Flesh Generator: Active');
+            if (currentInsuranceLevel > 0) upgrades.push(`Insurance Level: ${currentInsuranceLevel}`);
+            if (betterInsuranceActive) upgrades.push('Better Insurance: Active');
+            
+            if (upgrades.length === 0) {
+                updateConsole('No upgrades purchased yet.');
+            } else {
+                updateConsole(`Purchased Upgrades: ${upgrades.join(', ')}`);
+            }
         } else {
             updateConsole(`Unknown command: ${command}`);
         }
+
+        // Save the game state after any command
+        saveGame();
         
-        consoleInput.value = '';
-        saveCounters();
+        this.value = '';
     }
 });
 
-
+// Apply insurance in expeditions
+function applyInsurance(netLoss) {
+    let willPay = Math.random() >= insuranceFailureRate;
+    let insuranceReductionValue = Math.floor(netLoss * insuranceReduction);
+    if (willPay) {
+        netLoss -= insuranceReductionValue;
+        updateConsole(`Insurance reduced your loss by ${insuranceReductionValue} flesh.`);
+        if (betterInsuranceActive) {
+            betterInsuranceActive = false;
+            insuranceFailureRate = 0.35;
+            updateConsole('Better Insurance has expired and must be re-bought.');
+        }
+    } else {
+        updateConsole('The insurance company refused to pay out.');
+    }
+    return netLoss;
+    saveGame()
+}
 
 // Tab switching
 casinoTab.addEventListener('click', () => {
     casinoContent.classList.remove('hidden');
     expeditionContent.classList.add('hidden');
+    shopContent.classList.add('hidden');
     casinoTab.classList.add('active');
     expeditionTab.classList.remove('active');
+    shopTab.classList.remove('active');
 });
 
 expeditionTab.addEventListener('click', () => {
     casinoContent.classList.add('hidden');
     expeditionContent.classList.remove('hidden');
+    shopContent.classList.add('hidden');
     expeditionTab.classList.add('active');
     casinoTab.classList.remove('active');
+    shopTab.classList.remove('active');
+});
+
+shopTab.addEventListener('click', () => {
+    casinoContent.classList.add('hidden');
+    expeditionContent.classList.add('hidden');
+    shopContent.classList.remove('hidden');
+    shopTab.classList.add('active');
+    casinoTab.classList.remove('active');
+    expeditionTab.classList.remove('active');
 });
 
 startExpedition.addEventListener('click', () => {
     const fleshAmount = parseInt(fleshInvest.value);
 
     if (fleshAmount > 0 && !expeditionInProgress) {
+        fleshCount -= fleshAmount;
+        fleshCounter.textContent = fleshCount;
+        saveCounters();
+
         expeditionInProgress = true;
         updateConsole(`Started expedition with ${fleshAmount} flesh.`);
         expeditionProgressBar.classList.remove('hidden');
@@ -126,72 +222,119 @@ startExpedition.addEventListener('click', () => {
         progressBarInner.style.width = '0%';
 
         let progress = 0;
+        let intervalCount = 0;
+        let successProbability = 0.5;
+        let failureProbability = 0.5;
+        let finalOutcomeDecided = false;
+
+        const interimMessagesLow = [
+            "The crew is unsure of the route...",
+            "A small storm hits the fleet.",
+            "The ship's supplies are dwindling.",
+            "An unexpected delay halts the journey.",
+            "Mutiny threatens to break out among the crew."
+        ];
+        const interimMessagesMid = [
+            "The winds are in your favor!",
+            "The trade route seems promising.",
+            "Friendly dolphins swim alongside your vessel.",
+            "A distant island comes into view.",
+            "Your crew spots a potential new trading partner."
+        ];
+        const interimMessagesHigh = [
+            "Your ship sails with unmatched speed!",
+            "The crew spots a hidden treasure map.",
+            "A rare and valuable artifact is discovered onboard.",
+            "A sea breeze fills the sails with incredible power.",
+            "The crew celebrates finding untouched trade routes."
+        ];
+
+        const perilousMessages = [
+            "A pirate ship appears on the horizon!",
+            "The weather worsens, threatening the ship's safety.",
+            "An argument breaks out among the crew, leading to chaos.",
+            "Your ship strikes an unexpected reef, causing heavy damage.",
+            "Supplies have run dangerously low, and the crew is starving."
+        ];
+
         const interval = setInterval(() => {
             progress += 1.67;
+            intervalCount += 1;
             progressBarInner.style.width = progress + '%';
+
+            if (intervalCount % 12 === 0) {
+                let interimMessage = '';
+                let randomChance = Math.random();
+
+                if (fleshAmount <= 111) {
+                    interimMessage = interimMessagesLow[Math.floor(Math.random() * interimMessagesLow.length)];
+                } else if (fleshAmount <= 178) {
+                    interimMessage = interimMessagesMid[Math.floor(Math.random() * interimMessagesMid.length)];
+                } else {
+                    interimMessage = interimMessagesHigh[Math.floor(Math.random() * interimMessagesHigh.length)];
+                }
+
+                if (progress >= 20 && progress < 40) {
+                    if (randomChance < 0.3) {
+                        successProbability += 0.1;
+                        interimMessage += " The winds turn in your favor, boosting morale!";
+                    } else if (randomChance > 0.7) {
+                        failureProbability += 0.1;
+                        interimMessage += " Supplies are dwindling faster than expected.";
+                    }
+                } else if (progress >= 40 && progress < 60) {
+                    if (randomChance < 0.3) {
+                        successProbability += 0.2;
+                        interimMessage += " A nearby island provides fresh supplies.";
+                    } else if (randomChance > 0.7) {
+                        failureProbability += 0.2;
+                        interimMessage += " The crew spots a storm approaching.";
+                    }
+                } else if (progress >= 60 && progress < 80) {
+                    if (randomChance < 0.3) {
+                        successProbability += 0.3;
+                        interimMessage += " A successful trade boosts your profits.";
+                    } else if (randomChance > 0.7) {
+                        failureProbability += 0.3;
+                        interimMessage += " Pirates are spotted nearby!";
+                    }
+                } else if (progress >= 80 && progress < 100) {
+                    if (randomChance > 0.6) {
+                        interimMessage = perilousMessages[Math.floor(Math.random() * perilousMessages.length)];
+                        failureProbability += 0.5;
+                    } else {
+                        successProbability += 0.4;
+                        interimMessage += " The destination is near, and the crew is hopeful!";
+                    }
+                }
+
+                updateConsole(`${interimMessage} Progress: ${Math.floor(progress)}%.`);
+            }
 
             if (progress >= 100) {
                 clearInterval(interval);
                 expeditionInProgress = false;
                 expeditionProgressBar.classList.add('hidden');
 
-                let profitChance = 0;
-                let failChance = 0;
                 let result = '';
                 let fleshEarned = 0;
 
-                if (fleshAmount >= 1 && fleshAmount <= 11) {
-                    profitChance = 0.50;
-                    failChance = 0.50;
-                } else if (fleshAmount >= 12 && fleshAmount <= 22) {
-                    profitChance = 0.88;
-                    failChance = 0.40;
-                } else if (fleshAmount >= 23 && fleshAmount <= 44) {
-                    profitChance = 0.50;
-                    failChance = 0.30;
-                } else if (fleshAmount >= 45 && fleshAmount <= 60) {
-                    profitChance = 1.20;
-                    failChance = 0.40;
-                } else if (fleshAmount >= 61 && fleshAmount <= 78) {
-                    profitChance = 1.80;
-                    failChance = 0.35;
-                } else if (fleshAmount >= 79 && fleshAmount <= 87) {
-                    profitChance = 1.70;
-                    failChance = 0.10;
-                } else if (fleshAmount >= 88 && fleshAmount <= 91) {
-                    if (Math.random() <= 0.05) {
-                        tokenCount++;
-                        tokenCounter.textContent = tokenCount;
-                        fleshEarned = Math.floor(3.00 * fleshAmount);
-                        result = `Success! Received 1 token and earned ${fleshEarned} flesh.`;
+                if (!finalOutcomeDecided) {
+                    if (Math.random() < failureProbability) {
+                        const extraLoss = Math.floor(fleshAmount * (0.10 + Math.random() * 0.20));
+                        result = `Expedition failed! You lost an additional ${extraLoss} flesh.`;
+                        fleshCount -= extraLoss;
+                        fleshCounter.textContent = fleshCount;
+                        saveCounters();
                     } else {
-                        fleshEarned = Math.floor(3.00 * fleshAmount);
-                        result = `Success! Earned ${fleshEarned} flesh.`;
-                    }
-                    fleshCount += fleshEarned;
-                    fleshCounter.textContent = fleshCount;
-                    saveCounters();
-                } else if (fleshAmount >= 92 && fleshAmount <= 110) {
-                    profitChance = 2.00;
-                    failChance = 0.10;
-                } else if (fleshAmount >= 111) {
-                    profitChance = 1.30;
-                    failChance = 0.25;
-                } else {
-                    failChance = 0.60;
-                }
-
-                if (!result) {
-                    if (Math.random() < failChance) {
-                        result = 'Expedition failed!';
-                        fleshEarned = 0;
-                    } else {
-                        fleshEarned = Math.floor(profitChance * fleshAmount);
+                        fleshEarned = Math.floor(successProbability * fleshAmount);
                         result = `Success! Earned ${fleshEarned} flesh.`;
                         fleshCount += fleshEarned;
                         fleshCounter.textContent = fleshCount;
                         saveCounters();
                     }
+
+                    finalOutcomeDecided = true;
                 }
 
                 const netResult = fleshEarned - fleshAmount;
@@ -205,13 +348,13 @@ startExpedition.addEventListener('click', () => {
 
                 expeditionResult.textContent = result;
                 updateConsole(result);
+                saveGame()
             }
         }, 1000);
     } else {
         updateConsole('Invalid flesh amount or expedition already in progress.');
     }
 });
-
 
 // Toggling between game views
 document.getElementById('showDice6Game').addEventListener('click', () => {
@@ -309,6 +452,7 @@ document.getElementById('rollDice6').addEventListener('click', () => {
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
                 saveCounters();
+                saveGame()
             }, 3000);
         } else {
             updateConsole('Not enough flesh to place this bet.');
@@ -356,6 +500,7 @@ document.getElementById('rollDice20').addEventListener('click', () => {
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
                 saveCounters();
+                saveGame()
             }, 3000);
         } else {
             updateConsole('Not enough flesh to place this bet.');
@@ -402,6 +547,7 @@ document.getElementById('rollSlot').addEventListener('click', () => {
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
                 saveCounters();
+                saveGame()
             }, 3000);
         } else {
             updateConsole('Not enough flesh to place this bet.');
@@ -410,6 +556,151 @@ document.getElementById('rollSlot').addEventListener('click', () => {
         updateConsole('Invalid bet amount.');
     }
 });
+
+// Shop
+let fleshTyperMultiplier = 1;
+let passiveFleshGeneratorActive = false;
+let insuranceReduction = 0;
+let insuranceFailureRate = 0.35;
+let passiveGeneratorInterval;
+let passiveGeneratorNeedsRestart = false;
+let currentInsuranceLevel = 0;
+let betterInsuranceActive = false;
+
+// Function to update the flesh counter display
+function updateFleshCounter() {
+    document.getElementById('fleshCount').textContent = fleshCount;
+}
+
+// Function to update the console display
+function updateConsole(message) {
+    const consoleOutput = document.getElementById('consoleOutput');
+    consoleOutput.innerHTML += `<div>${message}</div>`;
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
+}
+
+// Handle purchases
+document.getElementById('buyMK1').addEventListener('click', () => {
+    if (fleshTyperMultiplier > 1) {
+        updateConsole('Flesh Typer MK1 already purchased.');
+    } else if (fleshCount >= 100) {
+        fleshCount -= 100;
+        fleshTyperMultiplier = 2;
+        updateConsole('Purchased Flesh Typer MK1! Flesh is now multiplied by 2.');
+        updateFleshCounter();
+        saveGame()
+    } else {
+        updateConsole('Not enough flesh for MK1.');
+    }
+});
+
+document.getElementById('buyMK2').addEventListener('click', () => {
+    if (fleshTyperMultiplier > 2) {
+        updateConsole('Flesh Typer MK2 already purchased.');
+    } else if (fleshCount >= 1000) {
+        fleshCount -= 1000;
+        fleshTyperMultiplier = 3;
+        updateConsole('Purchased Flesh Typer MK2! Flesh is now multiplied by 3.');
+        updateFleshCounter();
+        saveGame()
+    } else {
+        updateConsole('Not enough flesh for MK2.');
+    }
+});
+
+document.getElementById('buyMK3').addEventListener('click', () => {
+    if (fleshTyperMultiplier > 3) {
+        updateConsole('Flesh Typer MK3 already purchased.');
+    } else if (fleshCount >= 10000) {
+        fleshCount -= 10000;
+        fleshTyperMultiplier = 4;
+        updateConsole('Purchased Flesh Typer MK3! Flesh is now multiplied by 4.');
+        updateFleshCounter();
+        saveGame()
+    } else {
+        updateConsole('Not enough flesh for MK3.');
+    }
+});
+
+// Passive flesh generator
+document.getElementById('buyPassiveGenerator').addEventListener('click', () => {
+    if (fleshCount >= 10000 && !passiveFleshGeneratorActive) {
+        fleshCount -= 10000;
+        passiveFleshGeneratorActive = true;
+        updateConsole('Purchased Passive Flesh Generator! Generating +1 flesh every 2 seconds.');
+
+        passiveGeneratorInterval = setInterval(() => {
+            if (!passiveGeneratorNeedsRestart) {
+                fleshCount += 1;
+                updateFleshCounter();
+                saveGame()
+            }
+        }, 2000);
+
+        setTimeout(() => {
+            passiveGeneratorNeedsRestart = true;
+            updateConsole('The passive generator has stopped. Type "restart" to resume.');
+            saveGame()
+        }, 900000);
+    } else if (passiveFleshGeneratorActive) {
+        updateConsole('Passive generator already active.');
+    } else {
+        updateConsole('Not enough flesh for Passive Generator.');
+    }
+});
+
+// Insurance contracts
+document.getElementById('buyInsurance').addEventListener('click', () => {
+    let cost = 800 * (currentInsuranceLevel + 1);
+    if (fleshCount >= cost && currentInsuranceLevel < 5) {
+        fleshCount -= cost;
+        currentInsuranceLevel++;
+        insuranceReduction = [0.10, 0.15, 0.25, 0.40, 0.50, 0.65][currentInsuranceLevel];
+        updateConsole(`Purchased Insurance Contract. Losses reduced by ${insuranceReduction * 100}%.`);
+        updateFleshCounter();
+        saveGame()
+    } else {
+        updateConsole('Not enough flesh for next insurance contract or max contract reached.');
+    }
+});
+
+// Better insurance contracts
+document.getElementById('buyBetterInsurance').addEventListener('click', () => {
+    if (fleshCount >= 600 && !betterInsuranceActive) {
+        fleshCount -= 600;
+        betterInsuranceActive = true;
+        insuranceFailureRate = 0.15;
+        updateConsole('Purchased Better Insurance! Refusal rate reduced to 15% for next payout.');
+        updateFleshCounter();
+        saveGame()
+    } else if (betterInsuranceActive) {
+        updateConsole('Better insurance is already active. It will reset after the next expedition.');
+    } else {
+        updateConsole('Not enough flesh for Better Insurance.');
+    }
+});
+
+// Apply insurance in expeditions
+function applyInsurance(netLoss) {
+    let willPay = Math.random() >= insuranceFailureRate;
+    let insuranceReductionValue = Math.floor(netLoss * insuranceReduction);
+    if (willPay) {
+        netLoss -= insuranceReductionValue;
+        updateConsole(`Insurance reduced your loss by ${insuranceReductionValue} flesh.`);
+        if (betterInsuranceActive) {
+            betterInsuranceActive = false;
+            insuranceFailureRate = 0.35;
+            updateConsole('Better Insurance has expired and must be re-bought.');
+        }
+        saveGame()
+    } else {
+        updateConsole('The insurance company refused to pay out.');
+        saveGame()
+    }
+    return netLoss;
+}
+
+
 
 // Load counters when page loads
 window.addEventListener('load', loadCounters);

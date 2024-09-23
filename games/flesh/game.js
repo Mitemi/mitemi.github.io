@@ -3,6 +3,17 @@ let fleshCount = 0;
 let tokenCount = 0;
 let expeditionInProgress = false;
 
+let fleshTyperMultiplier = 1;
+let MultiplierBacklog = 1;
+let MultiplierEnabled = true
+let passiveFleshGeneratorActive = false;
+let insuranceReduction = 0;
+let insuranceFailureRate = 0.35;
+let passiveGeneratorInterval;
+let passiveGeneratorNeedsRestart = false;
+let currentInsuranceLevel = 0;
+let betterInsuranceActive = false;
+
 // DOM Elements
 const fleshCounter = document.getElementById('fleshCount');
 const tokenCounter = document.getElementById('tokenCount');
@@ -19,6 +30,8 @@ const startExpedition = document.getElementById('startExpedition');
 
 // Save game state to localStorage
 function saveGame() {
+    document.getElementById('fleshCount').textContent = fleshCount;
+    document.getElementById('tokenCount').textContent = tokenCount;
     localStorage.setItem('fleshCount', JSON.stringify(fleshCount));
     localStorage.setItem('tokenCount', JSON.stringify(tokenCount));
     localStorage.setItem('fleshTyperMultiplier', JSON.stringify(fleshTyperMultiplier));
@@ -39,34 +52,32 @@ function loadGame() {
     currentInsuranceLevel = JSON.parse(localStorage.getItem('currentInsuranceLevel')) || 0;
     betterInsuranceActive = JSON.parse(localStorage.getItem('betterInsuranceActive')) || false;
 
-    updateFleshCounter();
+    updateCounter();
     tokenCounter.textContent = tokenCount;
     console.log('Game loaded!');
 }
 
 window.addEventListener('load', loadGame);
-function updateFleshCounter() {
+
+// Update Counters
+function updateCounter() {
     document.getElementById('fleshCount').textContent = fleshCount;
+    document.getElementById('tokenCount').textContent = tokenCount;
 }
 
 // Update Console
-function updateConsole(message) {
-    const newMessage = document.createElement('p');
-    newMessage.textContent = message;
-    consoleOutput.appendChild(newMessage);
-    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-}
-
-// Function to update the flesh counter display
-function updateFleshCounter() {
-    document.getElementById('fleshCount').textContent = fleshCount;
-}
+// function updateConsole(message) {
+//     const newMessage = document.createElement('p');
+//     newMessage.textContent = message;
+//     consoleOutput.appendChild(newMessage);
+//     consoleOutput.scrollTop = consoleOutput.scrollHeight;
+// }
 
 // Function to update the console display
 function updateConsole(message) {
     const consoleOutput = document.getElementById('consoleOutput');
     consoleOutput.innerHTML += `<div>${message}</div>`;
-    consoleOutput.scrollTop = consoleOutput.scrollHeight; // Scroll to the bottom
+    consoleOutput.scrollTop = consoleOutput.scrollHeight;
 }
 
 // Console
@@ -76,51 +87,52 @@ document.getElementById('consoleInput').addEventListener('keypress', function (e
         const multiplierMatch = command.match(/^flesh\*(\d+)$/);
         
         if (command === 'flesh') {
-            fleshCount++;
-            updateFleshCounter();
-            updateConsole('Received 1 flesh.');
+            if (fleshTyperMultiplier == 1) {
+              fleshCount++;
+            } else if (fleshTyperMultiplier != 1) {
+              fleshCount += fleshTyperMultiplier;
+            }
+            updateCounter();
+            updateConsole(`Received ${fleshTyperMultiplier} flesh.`);
         } else if (command === 'brick') {
             fleshCount += 100000;
-            updateFleshCounter();
+            updateCounter();
             updateConsole('Received 100k flesh.');
         } else if (command === 'token') {
             tokenCount += 0;
-            document.getElementById('tokenCounter').textContent = tokenCount;
+            updateCounter()
             updateConsole('Received 0 token.');
         } else if (command === 'help') {
-            updateConsole('Commands: help, flesh, upgrades, contracts, restart, reset.');
+            updateConsole('Commands: help, flesh, upgrades, contracts, toggleMultiplier, generator, restart, reset.');
         } else if (command === 'reset') {
-            // Reset flesh, tokens, and all upgrades
             fleshCount = 0;
             tokenCount = 0;
             fleshTyperMultiplier = 1;
             passiveFleshGeneratorActive = false;
+            MultiplierEnabled = true;
+            MultiplierBacklog = 1;
             insuranceReduction = 0;
             currentInsuranceLevel = 0;
             betterInsuranceActive = false;
-
-            // Update the counters and console
-            updateFleshCounter();
-            document.getElementById('tokenCounter').textContent = tokenCount;
-            updateConsole('All game progress has been reset: Flesh, Tokens, and Upgrades.');
-
+            updateCounter();
+            updateConsole('All game progress has been reset.');
         } else if (command === 'judgement') {
             fleshCount -= 10;
-            updateFleshCounter();
+            updateCounter();
             updateConsole('Removed 10 flesh.');
         } else if (multiplierMatch) {
             const multiplier = parseInt(multiplierMatch[1], 10);
             if (multiplier >= 1 && multiplier <= 10) {
                 const fleshToAdd = multiplier;
                 fleshCount += fleshToAdd;
-                updateFleshCounter();
+                updateCounter();
                 updateConsole(`Received ${fleshToAdd} flesh.`);
                 
                 if (multiplier >= 3) {
                     setTimeout(() => {
                         fleshCount -= fleshToAdd - 1;
-                        updateFleshCounter();
-                        updateConsole(`Removed ${fleshToAdd - 1} flesh after 15 seconds.`);
+                        updateCounter();
+                        //updateConsole(`Removed ${fleshToAdd - 1} flesh after 15 seconds.`);
                     }, 15000);
                 }
             } else {
@@ -149,11 +161,34 @@ document.getElementById('consoleInput').addEventListener('keypress', function (e
             } else {
                 updateConsole(`Purchased Upgrades: ${upgrades.join(', ')}`);
             }
+        } else if (command === 'generator') {
+            if (passiveGeneratorNeedsRestart != true) {
+              updateConsole(`The passive flesh generator is currently active.`);
+            } else {
+              updateConsole(
+                `The passive flesh generator needs to be restarted.`
+              );
+            }
+        } else if (command === 'togglemultiplier') {
+            if (fleshTyperMultiplier == 1 && MultiplierBacklog !== 1) {
+              updateConsole(`You do not own any Flesh Typer Multiplier.`);
+            } else if (MultiplierEnabled == true) {
+              MultiplierEnabled = false
+              MultiplierBacklog = fleshTyperMultiplier
+              fleshTyperMultiplier = 1
+              updateConsole(
+                `Flesh Typer Multiplier disabled.`
+              );
+            } else if (MultiplierEnabled == false) {
+                MultiplierEnabled = true
+                fleshTyperMultiplier = MultiplierBacklog
+                updateConsole(
+                    `Flesh Typer Multiplier enabled.`
+                  );
+            }
         } else {
             updateConsole(`Unknown command: ${command}`);
         }
-
-        // Save the game state after any command
         saveGame();
         
         this.value = '';
@@ -207,13 +242,32 @@ shopTab.addEventListener('click', () => {
     expeditionTab.classList.remove('active');
 });
 
+// Toggling between game views
+document.getElementById('showDice6Game').addEventListener('click', () => {
+    toggleGameView('dice6Game');
+});
+document.getElementById('showDice20Game').addEventListener('click', () => {
+    toggleGameView('dice20Game');
+});
+document.getElementById('showSlotMachine').addEventListener('click', () => {
+    toggleGameView('slotMachine');
+});
+
+function toggleGameView(gameId) {
+    document.getElementById('dice6Game').classList.add('hidden');
+    document.getElementById('dice20Game').classList.add('hidden');
+    document.getElementById('slotMachine').classList.add('hidden');
+    document.getElementById(gameId).classList.remove('hidden');
+}
+
+// Expeditions
 startExpedition.addEventListener('click', () => {
     const fleshAmount = parseInt(fleshInvest.value);
 
     if (fleshAmount > 0 && !expeditionInProgress) {
         fleshCount -= fleshAmount;
         fleshCounter.textContent = fleshCount;
-        saveCounters();
+        saveGame()
 
         expeditionInProgress = true;
         updateConsole(`Started expedition with ${fleshAmount} flesh.`);
@@ -325,13 +379,13 @@ startExpedition.addEventListener('click', () => {
                         result = `Expedition failed! You lost an additional ${extraLoss} flesh.`;
                         fleshCount -= extraLoss;
                         fleshCounter.textContent = fleshCount;
-                        saveCounters();
+                        saveGame()
                     } else {
                         fleshEarned = Math.floor(successProbability * fleshAmount);
                         result = `Success! Earned ${fleshEarned} flesh.`;
                         fleshCount += fleshEarned;
                         fleshCounter.textContent = fleshCount;
-                        saveCounters();
+                        saveGame()
                     }
 
                     finalOutcomeDecided = true;
@@ -356,24 +410,6 @@ startExpedition.addEventListener('click', () => {
     }
 });
 
-// Toggling between game views
-document.getElementById('showDice6Game').addEventListener('click', () => {
-    toggleGameView('dice6Game');
-});
-document.getElementById('showDice20Game').addEventListener('click', () => {
-    toggleGameView('dice20Game');
-});
-document.getElementById('showSlotMachine').addEventListener('click', () => {
-    toggleGameView('slotMachine');
-});
-
-function toggleGameView(gameId) {
-    document.getElementById('dice6Game').classList.add('hidden');
-    document.getElementById('dice20Game').classList.add('hidden');
-    document.getElementById('slotMachine').classList.add('hidden');
-    document.getElementById(gameId).classList.remove('hidden');
-}
-
 // Popups for selecting numbers
 document.getElementById('selectNumbers6').addEventListener('click', () => {
     document.getElementById('numberPopup6').classList.remove('hidden');
@@ -382,14 +418,13 @@ document.getElementById('selectNumbers20').addEventListener('click', () => {
     document.getElementById('numberPopup20').classList.remove('hidden');
 });
 
-// Confirm selection for 6-sided dice
+// Confirm selection
 document.getElementById('confirmSelection6').addEventListener('click', () => {
     const selected = getSelectedNumbers(6);
     document.getElementById('selectedNumbers6').textContent = `Selected: ${selected.join(', ')}`;
     document.getElementById('numberPopup6').classList.add('hidden');
 });
 
-// Confirm selection for 20-sided dice
 document.getElementById('confirmSelection20').addEventListener('click', () => {
     const selected = getSelectedNumbers(20);
     document.getElementById('selectedNumbers20').textContent = `Selected: ${selected.join(', ')}`;
@@ -416,7 +451,6 @@ function getSelectedNumbers(diceType) {
     return selected;
 }
 
-// Hide popup when confirming
 function hidePopup(popupId) {
     document.getElementById(popupId).classList.add('hidden');
 }
@@ -437,12 +471,12 @@ document.getElementById('rollDice6').addEventListener('click', () => {
                 const numSelected = selectedNumbers.length;
                 let profit = 0;
                 let message = '';
-                let revenueMultiplier = 1.75 - 0.15 * (numSelected - 1);
+                let revenueMultiplier = 1.75 - 0.25 * (numSelected - 1);
                 revenueMultiplier = Math.max(revenueMultiplier, 1);
 
                 if (selectedNumbers.includes(diceRoll)) {
                     let revenue = betAmount * revenueMultiplier;
-                    profit = Math.floor(revenue - betAmount);
+                    profit = Math.floor(revenue*2 - betAmount);
                     fleshCount += profit;
                     message = `You rolled a ${diceRoll}! You win ${profit} flesh.`;
                 } else {
@@ -451,7 +485,6 @@ document.getElementById('rollDice6').addEventListener('click', () => {
 
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
-                saveCounters();
                 saveGame()
             }, 3000);
         } else {
@@ -488,7 +521,7 @@ document.getElementById('rollDice20').addEventListener('click', () => {
 
                     if (diceRoll === 20 && Math.random() < 0.05) {
                         tokenCount++;
-                        tokenCounter.textContent = tokenCount;
+                        updateCounter()
                         message = `You rolled a ${diceRoll} and got a token! You win ${profit} flesh.`;
                     } else {
                         message = `You rolled a ${diceRoll}. You win ${profit} flesh.`;
@@ -499,7 +532,6 @@ document.getElementById('rollDice20').addEventListener('click', () => {
 
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
-                saveCounters();
                 saveGame()
             }, 3000);
         } else {
@@ -529,7 +561,7 @@ document.getElementById('rollSlot').addEventListener('click', () => {
                 if (num1 === num2 && num2 === num3) {
                     if ([1, 3, 6, 7, 8].includes(num1)) {
                         tokenCount++;
-                        tokenCounter.textContent = tokenCount;
+                        updateCounter()
                         message += `You got triple ${num1} and won a token!`;
                     } else {
                         profit = Math.floor(betAmount * 2.5);
@@ -537,7 +569,7 @@ document.getElementById('rollSlot').addEventListener('click', () => {
                         message += `You got triple ${num1}! You win ${profit} flesh.`;
                     }
                 } else if (num1 === num2 || num2 === num3 || num1 === num3) {
-                    profit = Math.floor(betAmount * 1.5);
+                    profit = Math.floor(betAmount * 1.25);
                     fleshCount += profit;
                     message += `You got a pair! You win ${profit} flesh.`;
                 } else {
@@ -546,7 +578,6 @@ document.getElementById('rollSlot').addEventListener('click', () => {
 
                 fleshCounter.textContent = fleshCount;
                 updateConsole(message);
-                saveCounters();
                 saveGame()
             }, 3000);
         } else {
@@ -557,28 +588,6 @@ document.getElementById('rollSlot').addEventListener('click', () => {
     }
 });
 
-// Shop
-let fleshTyperMultiplier = 1;
-let passiveFleshGeneratorActive = false;
-let insuranceReduction = 0;
-let insuranceFailureRate = 0.35;
-let passiveGeneratorInterval;
-let passiveGeneratorNeedsRestart = false;
-let currentInsuranceLevel = 0;
-let betterInsuranceActive = false;
-
-// Function to update the flesh counter display
-function updateFleshCounter() {
-    document.getElementById('fleshCount').textContent = fleshCount;
-}
-
-// Function to update the console display
-function updateConsole(message) {
-    const consoleOutput = document.getElementById('consoleOutput');
-    consoleOutput.innerHTML += `<div>${message}</div>`;
-    consoleOutput.scrollTop = consoleOutput.scrollHeight;
-}
-
 // Handle purchases
 document.getElementById('buyMK1').addEventListener('click', () => {
     if (fleshTyperMultiplier > 1) {
@@ -587,7 +596,7 @@ document.getElementById('buyMK1').addEventListener('click', () => {
         fleshCount -= 100;
         fleshTyperMultiplier = 2;
         updateConsole('Purchased Flesh Typer MK1! Flesh is now multiplied by 2.');
-        updateFleshCounter();
+        updateCounter();
         saveGame()
     } else {
         updateConsole('Not enough flesh for MK1.');
@@ -601,7 +610,7 @@ document.getElementById('buyMK2').addEventListener('click', () => {
         fleshCount -= 1000;
         fleshTyperMultiplier = 3;
         updateConsole('Purchased Flesh Typer MK2! Flesh is now multiplied by 3.');
-        updateFleshCounter();
+        updateCounter();
         saveGame()
     } else {
         updateConsole('Not enough flesh for MK2.');
@@ -615,7 +624,7 @@ document.getElementById('buyMK3').addEventListener('click', () => {
         fleshCount -= 10000;
         fleshTyperMultiplier = 4;
         updateConsole('Purchased Flesh Typer MK3! Flesh is now multiplied by 4.');
-        updateFleshCounter();
+        updateCounter();
         saveGame()
     } else {
         updateConsole('Not enough flesh for MK3.');
@@ -627,12 +636,13 @@ document.getElementById('buyPassiveGenerator').addEventListener('click', () => {
     if (fleshCount >= 10000 && !passiveFleshGeneratorActive) {
         fleshCount -= 10000;
         passiveFleshGeneratorActive = true;
+        saveGame()
         updateConsole('Purchased Passive Flesh Generator! Generating +1 flesh every 2 seconds.');
 
         passiveGeneratorInterval = setInterval(() => {
             if (!passiveGeneratorNeedsRestart) {
                 fleshCount += 1;
-                updateFleshCounter();
+                updateCounter();
                 saveGame()
             }
         }, 2000);
@@ -657,7 +667,7 @@ document.getElementById('buyInsurance').addEventListener('click', () => {
         currentInsuranceLevel++;
         insuranceReduction = [0.10, 0.15, 0.25, 0.40, 0.50, 0.65][currentInsuranceLevel];
         updateConsole(`Purchased Insurance Contract. Losses reduced by ${insuranceReduction * 100}%.`);
-        updateFleshCounter();
+        updateCounter();
         saveGame()
     } else {
         updateConsole('Not enough flesh for next insurance contract or max contract reached.');
@@ -671,7 +681,7 @@ document.getElementById('buyBetterInsurance').addEventListener('click', () => {
         betterInsuranceActive = true;
         insuranceFailureRate = 0.15;
         updateConsole('Purchased Better Insurance! Refusal rate reduced to 15% for next payout.');
-        updateFleshCounter();
+        updateCounter();
         saveGame()
     } else if (betterInsuranceActive) {
         updateConsole('Better insurance is already active. It will reset after the next expedition.');
@@ -679,28 +689,3 @@ document.getElementById('buyBetterInsurance').addEventListener('click', () => {
         updateConsole('Not enough flesh for Better Insurance.');
     }
 });
-
-// Apply insurance in expeditions
-function applyInsurance(netLoss) {
-    let willPay = Math.random() >= insuranceFailureRate;
-    let insuranceReductionValue = Math.floor(netLoss * insuranceReduction);
-    if (willPay) {
-        netLoss -= insuranceReductionValue;
-        updateConsole(`Insurance reduced your loss by ${insuranceReductionValue} flesh.`);
-        if (betterInsuranceActive) {
-            betterInsuranceActive = false;
-            insuranceFailureRate = 0.35;
-            updateConsole('Better Insurance has expired and must be re-bought.');
-        }
-        saveGame()
-    } else {
-        updateConsole('The insurance company refused to pay out.');
-        saveGame()
-    }
-    return netLoss;
-}
-
-
-
-// Load counters when page loads
-window.addEventListener('load', loadCounters);

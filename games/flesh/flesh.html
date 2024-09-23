@@ -34,7 +34,7 @@
             <div class="tabs">
                 <button id="casinoTab" class="tab-button">Casino</button>
                 <button id="expeditionTab" class="tab-button">Expedition</button>
-                <button id="shopTab" class="shop-button">General Shop</button>
+                <button id="shopTab" class="tab-button">General Shop</button>
             </div>
 
             <div id="casinoContent" class="content hidden">
@@ -72,7 +72,7 @@
                 <!-- Slot Machine Game -->
                 <div id="slotMachine" class="game-section hidden">
                     <h3>Slot Machine</h3>
-                    <p>Rolls three numbers. If there are matches, you win.</p>
+                    <p>Rolls three numbers. If there are matches, you win. You may need to bet amounts in the two digits and above for a profit.</p>
                     <label for="slotBetAmount">Bet Amount:</label>
                     <input type="number" id="slotBetAmount" min="1" placeholder="Enter bet amount">
                     <button id="rollSlot">Roll Slot Machine</button>
@@ -105,7 +105,7 @@
             <!-- Expedition Tab Content -->
             <div id="expeditionContent" class="content hidden">
                 <h2>Colonial Expedition</h2>
-                <p>Invest <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh in a trade expedition to foreign overseas lands for a chance at great profitable returns.</p>
+                <p>Invest <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh in a trade expedition to foreign overseas lands for a chance at great profitable returns. The ships require <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh to consume and to trade for other valuable and exotic goods, which can then be grinded down into <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh. <br> <br> Letting your fleet starve is not recommended, but overflowing both the ship and foreign markets with <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh, sinking both of them in the process is also not recommended.</p>
                 <input type="number" id="fleshInvest" min="1" placeholder="Enter investment">
                 <button id="startExpedition">Start Expedition</button>
                 <div id="expeditionResult"></div><br>
@@ -116,10 +116,17 @@
 
             <div id="shopContent" class="content hidden">
                 <h2>General Shop</h2>
+                <p>The general shop provides opportunities to spend <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh for various upgrades.</p><br>
+                <h3>Flesh Typer Multiplier</h3>
+                <p>Multiplies the amount of <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh gained when typing 'flesh'.</p>
                 <button id="buyMK1">Buy Flesh Typer MK1 (100 flesh)</button>
                 <button id="buyMK2">Buy Flesh Typer MK2 (1000 flesh)</button>
-                <button id="buyMK3">Buy Flesh Typer MK3 (10000 flesh)</button>
-                <button id="buyPassiveGenerator">Buy Passive Flesh Generator (10000 flesh)</button>
+                <button id="buyMK3">Buy Flesh Typer MK3 (10000 flesh)</button><br><br>
+                <h3>Passive Flesh Generator</h3>
+                <p>Whether you believe it to be a remote plantation on some island, a meat grinder in your basement, or a high-tech condenser, the Flesh Generator™ provides you with unlimited passive <img width="12px" src="./img/flesh.webp" style="vertical-align: middle"> flesh income. Needs to be restarted every 15 minutes.</p>
+                <button id="buyPassiveGenerator">Buy Passive Flesh Generator (10000 flesh)</button><br><br>
+                <h3>Insurance Contracts</h3>
+                <p>The local national banks will graciously allow you to contract an insurance plan with them for your trading expeditions to faraway places no one knows. Some banks may refuse to offer compensation when a catastrophe occurs. Slightly better insurance contracts exist to profit off this inconvenience.</p>
                 <button id="buyInsurance">Buy Insurance Contract (800 flesh)</button>
                 <button id="buyBetterInsurance">Buy Better Insurance (600 flesh)</button>
             </div>

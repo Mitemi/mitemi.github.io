@@ -1,0 +1,61 @@
+body {
+    overflow-x: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.viewer {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+
+    margin: -20px;
+}
+
+.topbar, .center-view, .bottombar {
+    width: 100%;
+}
+
+.topbar, .bottombar {
+    z-index: 1;
+}
+
+.topbar {
+    height: 6.5%;
+    background-color: var(--darkerer-gray);
+}
+
+.center-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 65%;
+    background-color: var(--darker-gray);
+    z-index: 0;
+}
+
+.center-view img {
+    width: 80%;
+    height: 100%;
+    object-fit: contain;
+
+    padding: 20px;
+    background-color: var(--darkest-gray);
+}
+
+.bottombar {
+    height: 15%;
+    background-color: var(--darkerer-gray);
+}
+
+.button-container {
+    display: flex;
+    flex-flow: row;
+
+    margin: 10px;
+}

@@ -6,6 +6,7 @@
     --mid-gray: #787878;
     --dark-gray: #454545;
     --darker-gray: #404040;
+    --darkerer-gray: #2f2f2f;
     --darkest-gray: #1b1b1b;
     --darkest-gray-hover: #2a2a2a;
     --darker-darkest-gray: #171717;
@@ -142,6 +143,10 @@ a, button {
 
     transition: 0.25s;
     user-select: none;
+}
+
+a:hover {
+    text-decoration: none;
 }
 
 a:link {

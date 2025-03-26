@@ -72,11 +72,10 @@ button:hover {
 }
 
 .navbutton button {
-    background-color: var(--near-black);
-    margin: 0;
-    flex: 0.15;
-    user-select: none;
     height: 9vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .navbutton button:hover {
@@ -84,6 +83,20 @@ button:hover {
     flex: 0.175;
     max-height: 9vh;
     cursor: pointer;
+}
+
+.navbutton button, .navbutton a {
+    background-color: var(--near-black);
+    margin: 0;
+    flex: 0.15;
+    user-select: none;
+}
+
+.navbutton a, .navbutton a:visited {
+    background-color: rgba(0, 0, 0, 0);
+    color: var(--dark-lime);
+    text-decoration: none;
+    font: 90rem;
 }
 
 .exweb {

@@ -4,7 +4,7 @@ body {
 
 main {
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
@@ -13,7 +13,7 @@ main {
     justify-content: center;
     flex-flow: column;
 
-    margin: -20px;
+    width: 70%;
 }
 
 .topbar, .center-view, .bottombar {
@@ -34,7 +34,7 @@ main {
     justify-content: center;
     align-items: center;
 
-    height: 65%;
+    height: 75%;
     background-color: var(--darker-gray);
     z-index: 0;
 }
@@ -57,5 +57,22 @@ main {
     display: flex;
     flex-flow: row;
 
+    margin: 10px;
+}
+
+.checkmark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-right: 20px;
+    user-select: none;
+}
+
+label {
+    cursor: pointer;
+}
+
+h3 {
     margin: 10px;
 }

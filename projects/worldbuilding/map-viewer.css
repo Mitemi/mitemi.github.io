@@ -25,7 +25,7 @@ main {
 }
 
 .topbar {
-    height: 6.5%;
+    height: fit-content;
     background-color: var(--darkerer-gray);
 }
 
@@ -51,13 +51,34 @@ main {
 .bottombar {
     height: 15%;
     background-color: var(--darkerer-gray);
+    height: fit-content;
+
+    display: flex;
+    justify-content: space-between;
 }
 
-.button-container {
+.button-container, .special {
     display: flex;
     flex-flow: row;
+    align-items: center;
+    text-align: center;
 
     margin: 10px;
+}
+
+.special select {
+    margin-left: 20px;
+    margin-bottom: 7.5px;
+}
+
+.infobox {
+    width: 50%;
+    height: 100%;
+}
+
+.infobox p {
+    margin: 10px;
+    font-size: 0.8rem;
 }
 
 .checkmark {

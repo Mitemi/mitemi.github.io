@@ -17,10 +17,14 @@
         <nav>
             <img src="../../../web/images/icon.svg" class="nav-logo" onclick="location = ('../../../index.htm')">
             <div class="navbutton">
-                <button onclick="location = ('https://etigeox.github.io/')"><a href="https://etigeox.github.io/">Tales</a></button>
-                <button onclick="location = ('../../projects/index.htm')"><a href="../../projects/index.htm">Projects</a></button>
-                <button onclick="location = ('../../archive/index.htm')"><a href="../../archive/index.htm">Archive</a></button>
-                <button onclick="location = ('../../games/index.htm')"><a href="../../games/index.htm">Games</a></button>
+                <button onclick="location = ('https://etigeox.github.io/')"><a
+                        href="https://etigeox.github.io/">Tales</a></button>
+                <button onclick="location = ('../../projects/index.htm')"><a
+                        href="../../projects/index.htm">Projects</a></button>
+                <button onclick="location = ('../../archive/index.htm')"><a
+                        href="../../archive/index.htm">Archive</a></button>
+                <button onclick="location = ('../../games/index.htm')"><a
+                        href="../../games/index.htm">Games</a></button>
             </div>
             <button class="exweb" onclick="location = ('../../web/web.htm')">⌗</button>
         </nav>
@@ -34,14 +38,35 @@
                 <img src="../../archive/uchronie/maps/70_shardedv4-relief.PNG" id="map">
             </div>
             <div class="bottombar">
-                <div class="button-container">
-                    <button id="backward">←</button>
-                    <button id="forward">→</button>
-                    <div class="checkmark">
-                        <input type="checkbox" id="text">
-                        <label for="text">Enable Text</label>
+                <div class="controls">
+                    <div class="button-container">
+                        <button id="backward">←</button>
+                        <button id="forward">→</button>
+                        <div class="checkmark">
+                            <input type="checkbox" id="text">
+                            <label for="text">Enable Text</label>
+                        </div>
+                        <button id="auto">⏩</button>
                     </div>
-                    <button id="auto">⏩</button>
+                    <div class="special">
+                        <p>Special Map Modes</p>
+                        <select>
+                            <option value="none">None</option>
+                            <option value="../../archive/uchronie/maps/100_shardedv4-resources.PNG">Resource Map</option>
+                            <option value="../../archive/uchronie/maps/71_shardedv4-provinces.PNG">Provinces Map</option>
+                            <option value="../../archive/uchronie/maps/72_shardedv4-ethnicities.PNG">Ethnic Map</option>
+                            <option value="../../archive/uchronie/maps/95_shardedv4-cities.PNG">Cities Map</option>
+                            <option value="../../archive/uchronie/maps/79_shardedv4-religions-291.PNG">Religious Map (291 AE)</option>
+                            <option value="../../archive/uchronie/maps/90_shardedv4-currency.PNG">Currency Map (788 AE)</option>
+                            <option value="../../archive/uchronie/maps/70_shardedv4-relief-outlineless.PNG"></option>
+                            <option value="../../archive/uchronie/maps/87_shardedv4-712.PNG">Great Fierian War</option>
+                            <option value="../../archive/uchronie/maps/97_shardedv4-657-triple-alliance-war.PNG">War of the Tripartite Alliance</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="infobox">
+                    <p>0 AE</p>
+                    <p>Relief map displaying the elevation in the terrain of the Amatarian continent.</p>
                 </div>
             </div>
         </div>

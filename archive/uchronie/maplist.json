@@ -1,77 +1,82 @@
 [
     {
-        "year": "0",
+        "year": "0 AE",
         "map": "../../archive/uchronie/maps/70_shardedv4-relief.PNG",
-        "info": ""
+        "info": "Relief map displaying the elevation in the terrain of the Amatarian continent."
     },
     {
-        "year": "113",
+        "year": "113 AE",
         "map": "../../archive/uchronie/maps/74_shardedv4-113.PNG",
-        "info": ""
+        "info": "The Amatarian continent on the eve of the Illiacian Cataclysms."
     },
     {
-        "year": "190",
+        "year": "220 AE",
         "map": "../../archive/uchronie/maps/75_shardedv4-190.PNG",
-        "info": ""
+        "info": "Year depicted on map is inaccurate."
     },
     {
-        "year": "270",
+        "year": "270 AE",
         "map": "../../archive/uchronie/maps/76_shardedv4-270.PNG",
-        "info": ""
+        "info": "Birth of the Storytellers' states."
     },
     {
-        "year": "291",
+        "year": "291 AE",
         "map": "../../archive/uchronie/maps/77_shardedv4-291.PNG",
-        "info": ""
+        "info": "Daizome incorrectly shown as unflooded."
     },
     {
-        "year": "370",
+        "year": "370 AE",
         "map": "../../archive/uchronie/maps/80_shardedv4-370.PNG",
         "info": ""
     },
     {
-        "year": "485",
+        "year": "485 AE",
         "map": "../../archive/uchronie/maps/84_shardedv4-485.PNG",
         "info": ""
     },
     {
-        "year": "657",
+        "year": "657 AE",
         "map": "../../archive/uchronie/maps/85_shardedv4-657.PNG",
         "info": ""
     },
     {
-        "year": "707",
+        "year": "707 AE",
         "map": "../../archive/uchronie/maps/86_shardedv4-707.PNG",
         "info": ""
     },
     {
-        "year": "780",
+        "year": "780 AE",
         "map": "../../archive/uchronie/maps/88_shardedv4-780.PNG",
         "info": ""
     },
     {
-        "year": "788",
+        "year": "788 AE",
         "map": "../../archive/uchronie/maps/89_shardedv4-788.PNG",
-        "info": ""
+        "info": "Ther incorrectly shown as unflooded."
     },
     {
-        "year": "800",
+        "year": "800 AE",
         "map": "../../archive/uchronie/maps/91_shardedv4-800.PNG",
         "info": ""
     },
     {
-        "year": "821",
+        "year": "821 AE",
         "map": "../../archive/uchronie/maps/92_shardedv4-821.PNG",
         "info": ""
     },
     {
-        "year": "828",
+        "year": "828 AE",
         "map": "../../archive/uchronie/maps/93_shardedv4-828.PNG",
         "info": ""
     },
     {
-        "year": "858",
+        "year": "858 AE",
         "map": "../../archive/uchronie/maps/94_shardedv4-858.PNG",
+        "info": ""
+    },
+    {
+        "year": "899 AE",
+        "map": "../../archive/uchronie/maps/102_shardedv4-899.PNG",
         "info": ""
     }
 ]

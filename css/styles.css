@@ -92,7 +92,7 @@ button:hover {
     user-select: none;
 }
 
-.navbutton a, .navbutton a:visited {
+.navbutton a, .navbutton a:visited, .navbutton a:link,  .navbutton a:active{
     background-color: rgba(0, 0, 0, 0);
     color: var(--dark-lime);
     text-decoration: none;

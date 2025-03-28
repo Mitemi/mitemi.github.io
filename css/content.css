@@ -152,14 +152,13 @@ h5 {
     margin-top: 2.5vh;
     background-color: var(--darkest-gray);
 }
-
 .switch {
     display: inline-block;
     text-align: center;
-    line-height: 5vh;
+    line-height: 1.65em;
 
-    width: 1.5em;
-    height: 1.5em;
+    width: 1.65em;
+    height: 1.65em;
     padding: 0;
     margin: 0;
     margin-left: 10px;
@@ -167,7 +166,7 @@ h5 {
     background-color: var(--darker-gray);
     opacity: 0.75;
     font-size: 1em;
-    border-radius: 100px;
+    border-radius: 250px;
 }
 
 .switch:hover {

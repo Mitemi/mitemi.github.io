@@ -1,0 +1,44 @@
+[
+    {
+        "character": "Lisotem",
+        "image": "../../games/soucou/img/lisotem.PNG",
+        "allegiance": "None",
+        "description": "Lisotem is a wanderer through time."
+    },
+    {
+        "character": "Cercey",
+        "image": "../../games/soucou/img/cercey.PNG",
+        "allegiance": "In-Between",
+        "description": "Cercey is an officer of the In-Between forces, given command over the occupation forces of a few cities."
+    },
+    {
+        "character": "Alvart",
+        "image": "../../games/soucou/img/alvart.PNG",
+        "allegiance": "House of Alquart",
+        "description": "Alvart is the heir to the noble House of Alquart, based in the Alquartian highlands."
+    },
+    {
+        "character": "Lusin",
+        "image": "../../games/soucou/img/lusin.PNG",
+        "allegiance": "None",
+        "description": "Of all of the information known about her, Lusin is known to be the Goddess on the moon, having interacted with Arev as an equal."
+    },
+    {
+        "character": "Cherminon",
+        "image": "../../games/soucou/img/cherminon.PNG",
+        "allegiance": "Ninth Order of the Solar Sanctum",
+        "description": "Cherminon rose through the ranks of the Solar orders, eventually arising to the position of grandmaster of the Ninth Order, the youngest of any grandmaster in any order."
+    },
+    {
+        "character": "The Earl",
+        "image": "../../games/soucou/img/earl.PNG",
+        "allegiance": "None",
+        "description": "The Earl is an enigmatic figure appearing seemingly out of nowhere."
+    },
+    {
+        "character": "Novana",
+        "image": "../../games/soucou/img/novana.PNG",
+        "allegiance": "None",
+        "description": "Novana has appeared as The Earl's maid."
+    }
+]

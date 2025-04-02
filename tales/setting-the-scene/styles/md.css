@@ -1,0 +1,14 @@
+#content h3 {
+    color: var(--mid-lime);
+    border-bottom: 1px solid var(--lime); 
+    width: fit-content;
+}
+
+#content p {
+    color: var(--mid-lime);
+}
+
+.row-container button {
+    width: 12.5ch;
+    max-width: 12.5ch;
+}

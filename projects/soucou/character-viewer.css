@@ -1,0 +1,85 @@
+body {
+    overflow-x: hidden;
+}
+
+main {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.viewer {
+    display: flex;
+    justify-content: start;
+    flex-flow: column;
+
+    width: 70%;
+    height: 70%;
+}
+
+.topbar, .center-view, .bottombar {
+    width: 100%;
+}
+
+.topbar, .bottombar {
+    z-index: 1;
+}
+
+.topbar {
+    height: fit-content;
+    background-color: var(--darkerer-gray);
+}
+
+.center-view {
+    display: flex;
+    justify-content: space-around;
+    align-items: end;
+
+    height: fit-content;
+    background-color: var(--darker-gray);
+    z-index: 0;
+}
+
+.character, .info {
+    background-color: var(--darkest-gray);
+}
+
+.character img {
+    width: 50vh;
+    object-fit: contain;
+
+    background-color: var(--darkest-gray);
+}
+
+.info {
+    width: 50%;
+    height: 100%;
+
+    position: relative;
+}
+
+#title {
+    font-weight: 900;
+}
+
+.controls {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: var(--darkerer-gray);
+    padding: 5px;
+}
+
+h3, .info p, .checkmark {
+    margin: 10px;
+}
+
+.bottom {
+    position: absolute;
+    bottom: 0;
+}
+
+.bottom p {
+    margin-bottom: 17.5rem;
+}

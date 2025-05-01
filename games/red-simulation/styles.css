@@ -1,0 +1,61 @@
+:root {
+    --white: #ffffff;
+    --black: #171717;
+    --near-black: #101110;
+    --gray: #999999;
+    --mid-gray: #787878;
+    --dark-gray: #454545;
+    --darker-gray: #404040;
+    --darkerer-gray: #2f2f2f;
+    --darkererer-gray: #282828;
+    --darkest-gray: #1b1b1b;
+    --darkest-gray-hover: #2a2a2a;
+    --darker-darkest-gray: #171717;
+    --lime: #2bff00;
+    --mid-lime: #26e600;
+    --dark-lime: #2ab500;
+    --yellow: #fbff00;
+    --dark-yellow: #f2df07;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    background-color: var(--near-black);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+    overflow-y: hidden;
+
+    display: flex;
+    flex-flow: row;
+}
+
+canvas {
+    border: 10px groove #ff0000;
+}
+
+.board {
+    color: white;
+    margin: 4ch;
+
+    user-select: none;
+}
+
+input, label, button {
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+}
+
+.switch {
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    margin-left: 10px;
+}

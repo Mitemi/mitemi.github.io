@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SST</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./game.js" defer></script>
+</head>
+
+<body>
+    <canvas width="850" height="700"></canvas>
+    <div class="board">
+        <p>Move with WASD or ↑←↓→</p>
+
+        <br><br>
+
+        <input type="checkbox" id="mouse">
+        <label for="mouse">🖰 Mouse Control</label><br><br>
+        <input type="checkbox" id="random">
+        <label for="random">♣ Randomness</label><br><br>
+        <input type="range" id="bias" value="1" step="0.05" min="-1.5" max="1.5">
+        <label for="bias">⓪ Bias</label><br><br>
+
+        <br><br>
+
+        <input type="range" id="speed" value="0.4" step="1" min="1" max="10">
+        <label for="speed">✦ Player Speed</label><br><br>
+        <input type="range" id="size" value="0.8" step="1" min="1" max="25">
+        <label for="size">◆ Player Size</label><br><br>
+        <input type="number" id="balls" value="20" step="1" min="0" max="100">
+        <label for="balls">❂ Ball Amount</label><button class="switch">⛨</button><br><br>
+
+        <br><br>
+
+        <button id="refresh">Refresh</button>
+    </div>
+</body>
+
+</html>

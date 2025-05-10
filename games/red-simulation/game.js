@@ -258,7 +258,7 @@ const playerUpdate = (d) => {
 
     let aimMethod = aimbot.checked ? [Math.cos(Math.atan2(boss.y - player.y, boss.x - player.x)) * 0.5, Math.sin(Math.atan2(boss.y - player.y, boss.x - player.x)) * 0.5] : [0, -1];
 
-    phaseTimer++;
+    phaseTimer+= 1 * d;
     if (keys.x && player.health > 0 && phaseTimer >= 15 * d|| keys.X && player.health > 0 && phaseTimer >= 15 * d) {
             bullets.push({
                 x: player.x + player.size / 2,
@@ -302,7 +302,7 @@ const playerUpdate = (d) => {
 // Boss Updating
 const bossUpdate = (d) => {
     bossIntensity = ballSpeed.value;
-    fireTimer++;
+    fireTimer += 1 * d;
     if (fireTimer >= bossIntensity * d && boss.health > 0) {
         fireTimer = 0;
         balls.push({

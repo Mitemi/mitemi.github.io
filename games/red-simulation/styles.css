@@ -29,7 +29,7 @@ html, body {
     margin: 0;
     padding: 0;
 
-    overflow-y: hidden;
+    overflow: hidden;
 
     display: flex;
     flex-flow: row;
@@ -39,9 +39,19 @@ canvas {
     border: 10px groove #ff0000;
 }
 
+@media screen and (width <= 1050px) {
+	canvas {
+        width: 60%;
+        height: 100%;
+    }
+ }
+
 .board {
+    width: 100%;
+    min-width: 10px;
+    height: 100%;
     color: white;
-    margin: 4ch;
+    margin-left: 4ch;
 
     user-select: none;
 }
@@ -58,4 +68,28 @@ input:focus {
     background-color: rgba(0, 0, 0, 0);
     color: white;
     margin-left: 10px;
+}
+
+.row {
+    display: flex;
+    flex-flow: row;
+    align-content: center;
+    height: 5ch;
+}
+
+.lang {
+    width: 3.5ch;
+    margin-left: 1.5ch;
+    padding: 1ch;
+
+    background-color: #eeeeee;
+    border: 1px solid #ffffff;
+    box-sizing: content-box;
+    cursor: pointer;
+}
+
+.bossmode {
+    background-color: #eeeeee;
+    padding: 1ch;
+    color: black;
 }

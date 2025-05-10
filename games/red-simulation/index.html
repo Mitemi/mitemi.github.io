@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SST</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./game.js" defer></script>
+</head>
+
+<body>
+    <canvas width="850" height="700"></canvas>
+    <div class="board">
+        <p>Move with WASD or ↑←↓→</p>
+        <p class="shoot">Shoot with X</p>
+
+        <br><br>
+
+        <input type="checkbox" id="mouse">
+        <label for="mouse">🖰 Mouse Control</label><br><br>
+        <div class="random-container">
+            <input type="checkbox" id="random">
+            <label for="random">♣ Randomness</label><br><br>
+            <div class="vis-container">
+                <input type="range" id="bias" value="1" step="0.05" min="-1.5" max="1.5">
+                <label for="bias">⓪ Bias</label><br><br>
+            </div>
+        </div>
+
+        <br><br>
+
+        <input type="range" id="speed" value="0.4" step="0.1" min="0.1" max="3">
+        <label for="speed">✦ Player Speed</label><br><br>
+        <input type="range" id="size" value="0.8" step="1" min="1" max="25">
+        <label for="size">◆ Player Size</label><br><br>
+        <div class="ball-settings">
+            <div class="ball-amount">
+                <input type="number" id="balls" value="20" step="1" min="0" max="100">
+                <label for="balls">❂ Ball Amount</label><button class="switch">⛨</button><br><br>
+            </div>
+            <input type="range" id="ball-speed" value="1" step="0.5" min="0" max="3">
+            <label for="ball-speed">✦ Ball Speed</label><br><br>
+        </div>
+
+        <br><br>
+
+        <input type="checkbox" id="draw">
+        <label for="draw">✎ Drawing Mode</label><br><br>
+        <input type="checkbox" id="ghost">
+        <label for="ghost">⩀ Ghost Mode</label><br><br>
+        <div class="modes">
+            <input type="checkbox" id="onehit">
+            <label for="onehit">☠ One Hit Mode</label><br><br>
+            <input type="checkbox" id="god">
+            <label for="god">❈ God Mode</label><br><br>
+        </div>
+        <div class="bossmodes">
+            <input type="checkbox" id="aimbot">
+            <label for="aimbot">⚔ Aimbot</label><br><br>
+        </div>
+
+        <br><br>
+
+        <div class="row">
+            <button id="refresh">Refresh</button>
+            <img class="lang" src="https://flagpedia.net/data/flags/emoji/twitter/256x256/gb.png">
+        </div><br><br>
+
+        <button class="bossmode">Bossfight Mode</button>
+    </div>
+</body>
+
+</html>
